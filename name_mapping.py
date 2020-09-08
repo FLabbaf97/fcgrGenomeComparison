@@ -272,9 +272,91 @@ sp = {
     "BA000016.3 Clostridium perfringens str. 13 DNA, complete genome" : "Clostridium perfringens str. 13 DNA",
     "CP000527.1 Desulfovibrio vulgaris DP4, complete genome" : "Desulfovibrio vulgaris DP4",
     "AE017285.1 Desulfovibrio vulgaris subsp. vulgaris str. Hildenborough, complete genome" : "Desulfovibrio vulgaris Hildenborough",
+    #mitochondrial
+    "V00662.1 human" :  "Human",
+    "D38116.1 Pan paniscus mitochondrial DNA, complete sequence" : "Pigmy chimpanzee",
+    "D38113.1 Pan troglodytes mitochondrial DNA, complete sequence" : "Common chimpanzee",
+    "D38114.1 Gorilla gorilla mitochondrial DNA, complete genome" : "Gorilla",
+    "X99256.1 Hylobates lar complete mitochondrial DNA sequence" : "Gibbon",
+    "Y18001.1 Papio hamadryas mitochondrial DNA, complete genome" : "Baboon",
+    "AY863426.1 Cercopithecus aethiops mitochondrion, complete genome" : "Vervet monkey",
+    "D38115.1 Pongo pygmaeus mitochondrial DNA, complete sequence" : "Bornean orangutan",
+    "NC_002083.1 Pongo abelii mitochondrion, complete genome" : "Sumatran orangutan",
+    "U20753.1 Felis catus mitochondrion, complete genome" : "Cat",
+    "U96639.2 Canis familiaris mitochondrion, complete genome" : "Dog",
+    "AJ002189.1 Sus scrofa complete mitochondrial DNA" : "Pig",
+    "AF010406.1 Ovis aries complete mitochondrial genome" : "Sheep",
+    "AF533441.1 Capra hircus mitochondrion, complete genome" : "Goat",
+    "V00654.1 Bos taurus complete mitochondrial genome" : "Cow",
+    "AY488491.1 Bubalus bubalis mitochondrion, complete genome" : "Buffalo",
+    "EU442884.2 Canis lupus chanco mitochondrion, complete genome" : "Wolf",
+    "EF551003.1 Panthera tigris mitochondrion, complete genome" : "Tiger",
+    "EF551002.1 Panthera pardus mitochondrion, complete genome" : "Leopard",
+    "X97336.1 Rhinoceros unicornis complete mitochondrial genome" : "Indian Rhinoceros",
+    "Y07726.1 Ceratotherium simum complete mitochondrial DNA sequence" : "White Rhinoceros",
+    "DQ402478.1 Ursus thibetanus mupinensis mitochondrion, complete genome" : "Black Bear",
+    "AF303110.1 Ursus arctos mitochondrion, complete genome" : "Brown Bear",
+    "AF303111.1 Ursus maritimus mitochondrion, complete genome" : "Polar Bear",
+    "EF212882.1 Ailuropoda melanoleuca mitochondrion, complete genome" : "Giant Panda",
+    "AJ001588.1 Oryctolagus cuniculus complete mitochondrial genome" : "Rabbit",
+    "X88898.2 Erinaceus europaeus complete mitochondrial DNA sequence" : "Hedgehog",
+    "NC_002764.1 Macaca sylvanus mitochondrion, complete genome" : "Macaca Thibet",
+    "AJ238588.1 Sciurus vulgaris complete mitochondrial genome" : "Squirrel",
+    "AJ001562.1 Myoxus glis complete mitochondrial genome" : "Dormouse",
+    "X72204.1 Balaenoptera musculus mitochondrial DNA complete genome" : "Blue whale",
+    "NC_005268.1 Balaena mysticetus mitochondrion, complete genome" : "Bowhead Whale",
+    "NC_007441.1 Pantholops hodgsonii mitochondrion, complete genome" : "chiru",
+    "NC_008830.1 Phacochoerus africanus mitochondrion, complete genome" : "Common warthog",
+    "NC_001788.1 Equus asinus mitochondrion, complete genome" : "donkey",
+    "NC_001321.1 Balaenoptera physalus mitochondrion, complete genome" : "Fin Whale",
+    "NC_005270.1 Eschrichtius robustus mitochondrion, complete genome" : "Gray Whale",
+    "NC_001640.1 Equus caballus mitochondrion, complete genome" : "horse",
+    "NC_005275.1 Platanista minor mitochondrion, complete genome" : "Indus River Dolphin",
+    "NC_006931.1 Eubalaena japonica mitochondrion, complete genome" : "North Pacific whale",
+    "NC_010640.1 Capricornis swinhoei mitochondrion, complete genome" : "Taiwan serow",
 
 }
-
+#DQ402478_Black_Bear.
+#NC_010640_Taiwan_serow.
+#AF303111_Polar_Bear.
+#AJ002189_Pig.
+#U20753_Cat.
+#AJ001588_Rabbit.
+#NC_005268_Bowhead_Whale.
+#D38113_Com_Chim.
+#NC_002764_Macaca_Thibet.
+#U96639_Dog.
+#NC_002083_Sum_Oran.
+#EF551003_Tiger.
+#EF212882_Giant_panda.
+#X97336_Indian_Rhino.
+#AY863426_Ver_Monkey.
+#NC_007441_Chiru.
+#NC_005270_Gray_Whale.
+#Y18001_Baboon.
+#NC_001788_donkey.
+#V00662_Human.
+#X88898_Hedgehog.
+#EU442884_Wolf.
+#AJ001562_Dormouse.
+#X99256_Gibbon.
+#X72204_Blue_Whale.
+#D38115_Bor_Oran.
+#EF551002_Leopard.
+#AF303110_Brown_Bear.
+#NC_008830_Common_warthog.
+#AF010406_Sheep.
+#AF533441_Goat.
+#NC_005275_Indus_river_dolphin.
+#AY488491_Buffalo.
+#NC_006931_North_pacific_whale.
+#D38114_Gorilla.
+#NC_001640_horse.
+#D38116_Pig_Chim.
+#Y07726_White_Rhino.
+#NC_001321_Fin_Whale.
+#AJ238588_Squirrel.
+#V00654_Cow.
 
 # RESTV_1996_AB050936
 # RESTV_1990_AF522874

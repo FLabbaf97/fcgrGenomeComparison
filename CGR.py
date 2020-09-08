@@ -15,6 +15,7 @@ import numpy as np
 #   |            |
 #  C--------------G
  
+# this function produce values of matrix
 def count_kmers(sequence, k,r):
     regionLen = round(((len(sequence)-(k-1))/r)+.5)
     d = collections.defaultdict(np.int8)
@@ -25,9 +26,10 @@ def count_kmers(sequence, k,r):
         if "N" not in sequence[i:i+k]:
             d[sequence[i:i+k]] += 1
             p[sequence[i:i+k]] += int(i/regionLen)+1
-            # c[sequence[i:i+k]] += 2^int(i/regionLen)            
-    return d , p , c
-  
+            c[sequence[i:i+k]] = int(i/regionLen)+1            
+    return d , p, c
+
+# this function puts values in the case of FCGR matrix
 def chaos_game_representation(probabilities, k , chaos):
     array_size = int(math.sqrt(4**k))
     maxx = array_size
@@ -53,28 +55,22 @@ def chaos_game_representation(probabilities, k , chaos):
  
     return chaos
 
-def CGR(data, k , r = 12):
-    chaos = np.full([2**k,2**k],0,dtype=np.uint8) 
-    picture = np.full([2**k,2**k],0,dtype=np.uint8)
-    code = np.full([2**k,2**k],0,dtype=np.uint32)
-    c , rn , rc = count_kmers(data, k , r)
-    chaos = chaos_game_representation(c, k, chaos)
-    regionPicture =  chaos_game_representation(rn, k, picture)
-    regionCode =  chaos_game_representation(rc, k, code)
+def CGR(data, k , r=16 ,type=["default"]):
+    c , rn , rm = count_kmers(data, k , r)
+    chaos , picture , code = [] ,[],[]
+    if("default" in type):
+        chaos = np.full([2**k,2**k],0,dtype=np.uint8) 
+        chaos = chaos_game_representation(c, k, chaos)
 
-    return chaos , regionPicture , regionCode
+    if("mean" in type):
+        picture = np.full([2**k,2**k],0,dtype=np.uint8)
+        picture =  chaos_game_representation(rn, k, picture)
 
-def weightCGR(data,k):
-    chaos = np.full([2**k,2**k],0,dtype=np.uint8) 
-    c = count_kmers(data, k)
-    data_len= len(data)
-    chaos = chaos_game_representation(c, k, chaos)
+    if("region" in type):
+        code = np.full([2**k,2**k],0,dtype=np.uint32)
+        code =  chaos_game_representation(rn, k, code)
 
-    #weight matrix
-    weight = np.full([2**k,2**k],0,dtype=np.uint8) 
-    w = calculate_positon_distribution(c , data , k)
-    weight = chaos_game_representation(w, k, weight)/data_len
-    return chaos, weight
+    return chaos, picture, code
     
 def calculate_positon_distribution(c , sequence , k):
     d = collections.defaultdict(float)
@@ -82,3 +78,23 @@ def calculate_positon_distribution(c , sequence , k):
         if "N" not in sequence[i:i+k]:
             d[sequence[i:i+k]] += i/c[sequence[i:i+k]]
     return d
+
+def CGR_coded(data , k, r, type=["code"]):
+    word_code = code_countword(data, k , r)
+    code_cgr = np.full([2**k,2**k,r],False)
+    return chaos_game_representation(word_code , k , code_cgr)
+
+
+
+def code_countword(sequence, k , r):
+    regionLen = round(((len(sequence)-(k-1))/r)+.5)
+    code = collections.defaultdict(np.array)
+
+    for i in range(len(sequence)-(k-1)):
+        if "N" not in sequence[i:i+k]:
+            code[sequence[i:i+k]] = np.full(r , False)              
+
+    for i in range(len(sequence)-(k-1)):
+        if "N" not in sequence[i:i+k]:
+            code[sequence[i:i+k]][int(i/regionLen)] = True              
+    return code

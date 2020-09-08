@@ -8,7 +8,7 @@ from PIL import Image
 import matplotlib
 
 
-from CGR import CGR , weightCGR
+from CGR import CGR , CGR_coded
 from Mask import binaryMask , grayScaleMask , do_mask
 from Metrics import similarity
 from tools import save_to_mega, naming, help, distance_matrix_compare, look_data
@@ -19,13 +19,14 @@ k=8
 inputDir = ""
 inputFile = ""
 outputDir = "Results"
-rn = 32
+rn=8
 method = "default"
 method_type ="none"
 
 
 
 def make_distance_matrix(all_cgr, method):
+    print("matrix completed, sart to find each with another similarity")
     index={}
     for i in range (len(all_cgr)):
         index[all_cgr[i][0]] = i
@@ -49,7 +50,13 @@ def make_distance_matrix(all_cgr, method):
                 distance_matrix[i][j] = similarity(all_cgr[i],all_cgr[j], method , rn)
             else:
                 distance_matrix[i][j] = np.NaN
-    save_to_mega(inputFile+"_"+method+"_k"+str(k)+"_rn"+str(rn), distance_matrix , list(index.keys()), dir=outputDir, inputDir=inputDir, mask=rn, method= method , k = k)
+    print("similarity completed, save to mega file")
+    save_to_mega("_"+method+"_k"+str(k)+"_rn"+str(rn), distance_matrix , list(index.keys()), dir=outputDir, inputDir=inputDir, mask=rn, method= method , k = k)
+    
+    #to compare distance matrix with alignment_based
+    #enter alignment_based matrix address in tood/distance_matrix_compare
+    print("comparing distance matrix with alignment based")
+    print("distance matrix shape" , distance_matrix.shape)
     distance_matrix_compare(distance_matrix)
     return 0
 
@@ -62,7 +69,7 @@ def main(argv):
         help()
         return
     try:
-        opts, args = getopt.getopt(argv,"f:d:o:rn:s:k:",["directory=","file=","regionnumber=","similarity=","ofile="])
+        opts, args = getopt.getopt(argv,"f:d:o:r:s:k:",["directory=","file=","regionnumber=","similarity=","ofile="])
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -82,16 +89,16 @@ def main(argv):
             global inputFile
             inputType = "single file" 
             inputFile = arg
-            print ("input file " + inputFile)
+            # print ("input file " + inputFile)
         elif opt in ("-d", "--directory"):
             global inputDir
             inputType = "folder" 
             inputDir = arg
-            print ("input dir " + inputDir)
-        elif opt in ("-rn", "--regionnumber"):
+            # print ("input dir " + inputDir)
+        elif opt in ("-r", "--regionnumber"):
             global rn 
-            rn = arg
-            print("region number "+ rn)
+            rn = int(arg)
+            print("region number ",rn)
         elif opt in ("-s", "--similarity"):
             global method
             method = arg
@@ -107,7 +114,7 @@ def main(argv):
     all_fcgr = []
     genomes = []
     if(inputType == "folder"):
-        print("folder operation")
+        # print("folder operation")
         for filename in os.listdir(os.getcwd()+"/"+inputDir+"/"):
             if filename.endswith(".fasta"):
                 with open(os.path.join(os.getcwd()+"/"+inputDir+"/", filename), 'r') as f:
@@ -117,7 +124,7 @@ def main(argv):
                     genomes.append([genome , name])
     
     elif(inputType =="single file"):
-        print("do single file operation")
+        # print("do single file operation")
         f = open(inputFile)
         data = f.read().split(">")
         for each in data[1:]:
@@ -138,12 +145,18 @@ def main(argv):
         genome = genomeT[0]
         name = genomeT[1]
         # print("genome")
-        fcgr, regionPicture, regionCode  = CGR(genome, k, rn)
-        all_fcgr.append([name, fcgr, regionPicture , regionCode])
+        #calculate cgr matrix or any other matrix of genome
+        fcgr, regionPicture, region  = CGR(genome, k, rn , ["default", "mean","region"])
+        if(method == "region_coding"):
+            regionCode = CGR_coded(genome , k , rn , ["code"])
+            all_fcgr.append([name, fcgr, regionPicture , regionCode])
+        else:
+            all_fcgr.append([name, fcgr, regionPicture, region])
 
                
 # ----------- heart of heart ------------------
     make_distance_matrix(all_fcgr , method)
+    print("--------------------------------------------------------------------------------------")
 
 if __name__ == "__main__":
    main(sys.argv[1:])

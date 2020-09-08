@@ -11,17 +11,17 @@ from name_mapping import sp
 
 def distance_matrix_compare(b):
     print("************  result   ********************")
-    df = pd.read_excel("alignment_based/mitochondrial.xls",header=0 , index_col=0, sheet_name=0)
+    df = pd.read_excel("alignment_based/influenza.xls",header=0 , index_col=0, sheet_name=0)
     a = df.as_matrix()
     
     a = a.flatten()
     b = b.flatten()
-    print("alignment : " , len(a))
-    print("reality" , len(b))
+    # print("alignment : " , len(a))
+    # print("reality" , len(b))
     a = a[np.logical_not(np.isnan(a))]
     b = b[np.logical_not(np.isnan(b))]
-    print("real alignment : " , len(a))
-    print("real reality" , len(b))
+    # print("real alignment : " , len(a))
+    # print("real reality" , len(b))
     r = np.corrcoef(a , b)[0,1]
     print("pearson correlarion coeficient: " , r)
     #dot product
@@ -56,7 +56,7 @@ def save_to_mega(filename, matrix , species, dir, inputDir , mask , method , k):
     f.write(format)
     f.write(description)
     f.write("\n")
-    print(species)
+    # print(species)
     for i in range(len(species)):
         # f.write("["+i+"] ")
         f.write("#"+species[i]+ "\n")

@@ -9,13 +9,14 @@ def similarity(first , second , method , w =[] , rn = 24):
     d1 = first[2]
     d2 = second[2]
 
+    
     if(method == "regioning"):
-        regionPicture1 = first[2]
-        regionPicture2 = second[2]
+        regionPicture1 = first[3]
+        regionPicture2 = second[3]
         distance = np.abs(regionPicture1-regionPicture2)
         similarity = rn - distance
         return w_pearson(mat1 , mat2 ,  similarity)
-    if(method == "mean_region"):
+    elif(method == "mean_region"):
         regionPicture1 = first[2]/(mat1+0.00001)
         regionPicture2 = second[2]/(mat2+0.00001)
         mat1 = ((len(mat1)^2)/np.sum(mat1))*mat1
@@ -23,15 +24,12 @@ def similarity(first , second , method , w =[] , rn = 24):
         distance = np.abs(regionPicture1-regionPicture2)
         similarity = rn - distance
         return w_pearson(mat1 , mat2 , similarity)
-    if(method == "region_coding"):
+    elif(method == "region_coding"):
         regionCode1 = first[3]
         regionCode2 = second[3]
-        distance = np.bitwise_xor(regionCode1,regionCode2)
-        a = np.array([np.array([countSetBits(xi) for xi in yi]) for yi in distance])
-        # print(a)
-        similarity = a
-        return w_pearson(mat1 , mat2 , similarity)
-    if(method == "Jaccard"):
+        # print("regionCode1 shape" , regionCode1.shape)
+        return region_code_similarity(mat1 , mat2 , regionCode1 , regionCode2)
+    elif(method == "Jaccard"):
         return jaccard_disSimilarity(mat1 , mat2)
     elif(method == "default" or method == "Euclidean"):
         return Euclidean_distance(mat1 , mat2)
@@ -53,6 +51,20 @@ def similarity(first , second , method , w =[] , rn = 24):
     else:
         print(method , " is undefined method")
 
+
+def region_code_similarity(mat1 , mat2 , regionCode1 , regionCode2):
+    #for each word, weight is mumber of shared region 
+    # print("compute regional similarity")
+    weight_code = np.bitwise_and(regionCode1, regionCode2)
+    # print("weigh code shape", weight_code.shape)
+    def g(x):
+        return np.sum(x)
+    weight = np.apply_along_axis(g,2,weight_code)
+    # print("weight shape" , weight.shape)
+    # print("mat shape" , mat1.shape)
+    # print("weight" , weight.shape)
+    return w_pearson(mat1, mat2 , weight)
+            
 
 def Euclidean_distance(mat1, mat2):
     return sqrt(((mat1-mat2) * (mat1-mat2)).sum())
@@ -102,7 +114,7 @@ def pearson_correlation(mat1 , mat2):
     return corr
 
 def w_pearson(x, y, w):
-    # w.fill(1)
+    # print(x.shape() , y.shape() , w.shape())
     if(np.all((w == 0))):
         print("خاک بر سرم")
     ret = 1-(cov(x, y, w) / np.sqrt(cov(x, x, w) * cov(y, y, w)))
